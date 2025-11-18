@@ -1,8 +1,8 @@
-
 use std::io;
 use std::io::Write;
 use crate::Board;
 use crate::ai;
+use colored::Colorize;
 
 pub fn generate_moves(bb: i32) -> Vec<i32> {
     use crate::POWERS_OF_TWO;
@@ -18,7 +18,7 @@ pub fn generate_moves(bb: i32) -> Vec<i32> {
     output
 }
 
-pub fn print_board(board: Vec<u8>) {
+pub fn print_board(board: [i32; 9]) {
     println!();
     let mut row_ending = 2;
     for (index, pos)in board.iter().enumerate() {
@@ -37,6 +37,7 @@ pub fn print_board(board: Vec<u8>) {
 }
 
 pub fn game_loop(mut board: &mut Board) -> Result<(), String> {
+
     println!(r"
   _______ _          _______             _______         
  |__   __(_)        |__   __|           |__   __|        
@@ -58,8 +59,9 @@ pub fn game_loop(mut board: &mut Board) -> Result<(), String> {
     let isx = match xoro.as_str().trim() {
         "x" => true,
         "o" => false,
-        _ => panic!("Please enter x or o!")
+        _ => panic!("Please enter x or o! (uncapitalized)")
     };
+    print!("{}", "Board moves are entered as numbers that correspond to a square. Here is the key:\n\n0 1 2\n3 4 5\n6 7 8\n".bright_green());
 
 
     while board.evaluate_pos() == 2 {
