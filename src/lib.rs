@@ -49,19 +49,19 @@ impl Board {
         }
     }
 
-    pub fn generate_board(&self) -> Result<Vec<u8>, &str> {
-        let mut out = Vec::new();
+    pub fn generate_board(&self) -> Result<[i32; 9], &str> {
+        let mut out: [i32; 9];
         if self.xbb & self.obb != 0 {
             return Err("Invalid Entry!")
         }
         for i in 0..=8 {
             let cursor = 256 >> i;
             if cursor & self.xbb != 0 {
-                out.push(1)
+                out[i] = 1
             } else if cursor & self.obb != 0 {
-                out.push(0)
+                out[i] = 0
             } else {
-                out.push(2)
+                out[i] = 2
             }
         }
         Ok(out)
